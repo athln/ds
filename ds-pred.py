@@ -5,8 +5,8 @@ Loads five trained ANN checkpoints (ann_model_1.pt ... ann_model_5.pt) and
 predicts five damage-state outputs (DS-1 ... DS-5) from the same 7 structural
 inputs in a single clean, light-mode interface.
 
-Input features (fixed):
-    fc | fy | Pitting Mass Loss | Transverse Mass Loss
+Input features:
+    fc | fy | Longitudinal Mass Loss | Transverse Mass Loss
     Story Height | Bay Width | Slab Thickness
 
 Output targets:
@@ -52,7 +52,7 @@ FC_FY_INDICES = [
 FIELD_HINTS = {
     "Concrete Compressive Strength":   ("MPa", "20 – 30"),
     "Steel Bar Yield Strength":     ("MPa", "400 – 530"),
-    "Longitudinal Mass Loss":    ("%",              "0 – 50"),
+    "Longitudinal Mass Loss":    ("%",              "0 – 45"),
     "Transverse Mass Loss": ("%",              "0 – 70"),
     "Story Height":         ("m",              "3 – 4"),
     "Bay Width":            ("m",              "3 – 5"),
