@@ -19,7 +19,7 @@ This application loads pre-trained ANN models and simultaneously predicts five d
 
 | Feature | Description |
 |---|---|
-| **Single Prediction** | Enter 8 structural parameters and instantly receive DS-1 to DS-5 predictions displayed as colour-coded metric cards |
+| **Single Prediction** | Enter 7 structural parameters and instantly receive DS-1 to DS-5 predictions displayed as colour-coded metric cards |
 | **Batch Prediction** | Upload a CSV file with multiple records; all five damage states are predicted for every row and results can be downloaded |
 | **Model Info** | View architecture details, 5-fold cross-validation metrics (R², RMSE, NRMSE), and training configuration for each model |
 | **Template CSV** | Download a pre-filled template CSV when no file is uploaded in batch mode |
@@ -34,8 +34,7 @@ All eight inputs are shared across all five models.
 |---|---|---|---|---|
 | 1 | Concrete compressive strength | MPa | MPa | 20 – 30 |
 | 2 | Steel yield strength | MPa | MPa | 400 – 530 |
-| 3 | Average Mass Loss | % | % | 0 – 30 |
-| 4 | Pitting Mass Loss | % | % | 0 – 50 |
+| 4 | Longitudinal Mass Loss | % | % | 0 – 45 |
 | 5 | Transverse Mass Loss | % | % | 0 – 70 |
 | 6 | Story Height | m | m | 3.0 – 4.0 |
 | 7 | Bay Width | m | m | 3.0 – 5.0 |
@@ -178,9 +177,9 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 **CSV format example:**
 
 ```csv
-Concrete Compressive Strength ,Stel Yield Strength,Average Mass Loss,Pitting Mass Loss,Transverse Mass Loss,Story Height,Bay Width,Slab Thickness
-20.0,420.0,10.0,5.0,5.0,3.0,5.0,0.12
-25.5,455.0,15.0,8.0,6.0,3.2,4.5,0.14
+Concrete Compressive Strength ,Stel Yield Strength,Longitudinal Mass Loss,Transverse Mass Loss,Story Height,Bay Width,Slab Thickness
+20.0,420.0,5.0,5.0,3.0,5.0,0.12
+25.5,455.0,8.0,6.0,3.2,4.5,0.14
 ```
 
 ---
