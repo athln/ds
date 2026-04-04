@@ -91,7 +91,7 @@ Place all five files in the same directory as `ann_streamlit_app.py`, or specify
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/athln/ds.git
+git clone https://github.com/athln/ds-v1.git
 cd ann-predictor
 ```
 
