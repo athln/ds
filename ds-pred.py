@@ -5,8 +5,8 @@ Loads five trained ANN checkpoints (ann_model_1.pt ... ann_model_5.pt) and
 predicts five damage-state outputs (DS-1 ... DS-5) from the same 7 structural
 inputs in a single clean, light-mode interface.
 
-Input features:
-    fc | fy | Longitudinal Mass Loss | Transverse Mass Loss
+Input features (fixed):
+    fc | fy | Pitting Mass Loss | Transverse Mass Loss
     Story Height | Bay Width | Slab Thickness
 
 Output targets:
@@ -52,7 +52,7 @@ FC_FY_INDICES = [
 FIELD_HINTS = {
     "Concrete Compressive Strength":   ("MPa", "20 – 30"),
     "Steel Bar Yield Strength":     ("MPa", "400 – 530"),
-    "Longitudinal Mass Loss":    ("%",              "0 – 45"),
+    "Longitudinal Mass Loss":    ("%",              "0 – 50"),
     "Transverse Mass Loss": ("%",              "0 – 70"),
     "Story Height":         ("m",              "3 – 4"),
     "Bay Width":            ("m",              "3 – 5"),
@@ -146,8 +146,8 @@ def load_checkpoint(path):
     scaler_X = pickle.loads(ckpt["scaler_X"])
     scaler_y = pickle.loads(ckpt["scaler_y"])
     meta     = {
-        "cv_metrics"  : ckpt.get("cv_metrics",   {}),
-        "train_cfg"   : ckpt.get("train_cfg",    {}),
+        "cv_metrics"  : cfg.get("cv_metrics",            {}),   # ← was ckpt.get(); cv_metrics lives inside model_config
+        "train_cfg"   : ckpt.get("training_config",      {}),   # ← was "train_cfg"; key saved as "training_config"
         "model_config": cfg,
     }
     return model, scaler_X, scaler_y, meta
@@ -633,12 +633,14 @@ class ANNPredictorApp(tk.Tk):
                 raise ValueError(
                     f"Expected {N_FEATURES} columns, got {X_arr.shape[1]}.")
 
-            # Convert fc and fy columns from ksi to MPa
+            # Convert fc and fy columns from ksi to MPa for model inference only.
+            # Keep X_display with original ksi values for display and export.
+            X_display = X_arr.copy()
             X_arr[:, FC_FY_INDICES] = X_arr[:, FC_FY_INDICES] * KSI_TO_MPA
 
             preds = predict_all_batch(self.bundles, X_arr)
-            self._batch_data = (X_arr, preds)
-            self._populate_tree(X_arr, preds)
+            self._batch_data = (X_display, preds)
+            self._populate_tree(X_display, preds)
             n = len(rows)
             self.batch_status.set(
                 f"\u2713  {n} rows loaded from "
@@ -801,10 +803,6 @@ class ANNPredictorApp(tk.Tk):
                 txt = f"{val:.6f}" if isinstance(val, float) else "N/A"
                 col_val = SUCCESS if isinstance(val, float) else TEXT_DIM
                 _kv_light(body, label, txt, col_val)
-
-            _section_light(body, "Training Config")
-            for k, v in tcfg.items():
-                _kv_light(body, k, str(v), TEXT)
 
         parent.update_idletasks()
 
