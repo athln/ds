@@ -10,7 +10,7 @@ Seismic Damage State Prediction for Corroded Low-ductility RC Frames
 
 This application loads pre-trained ANN models and simultaneously predicts five damage state probabilities from a set of material, geometrical and deteriorational input parameters. It is designed for structural engineers and researchers working on seismic vulnerability assessment of corrosion-affected RC structures.
 
-**Author:** ANMK  |  NK |  NRC 
+**Author:** ANMK  |  NRC |  NK 
 **Version:** 1.0
 
 ---
@@ -192,5 +192,6 @@ This project is released for academic and research use. Please cite appropriatel
 
 ## Contact
 
-**Author:** ANMK |  NK |  NRC 
+**Author:** ANMK |  NRC |  NK 
+
 **Version:** 1.0
